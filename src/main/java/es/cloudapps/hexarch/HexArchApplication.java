@@ -1,0 +1,13 @@
+package es.cloudapps.hexarch;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HexArchApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(HexArchApplication.class, args);
+    }
+
+}

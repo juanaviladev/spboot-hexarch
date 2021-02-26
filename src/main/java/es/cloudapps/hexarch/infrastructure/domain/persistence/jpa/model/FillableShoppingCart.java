@@ -7,7 +7,7 @@ import java.util.List;
 
 public class FillableShoppingCart extends ShoppingCart {
 
-    public FillableShoppingCart(Integer id, List<CartItem> items, ShoppingCart.Status status) {
-        super(id, items, status);
+    public FillableShoppingCart(Integer id, List<CartItem> items, ShoppingCart.Status status, Integer totalQuantity) {
+        super(id, items, status, totalQuantity);
     }
 }

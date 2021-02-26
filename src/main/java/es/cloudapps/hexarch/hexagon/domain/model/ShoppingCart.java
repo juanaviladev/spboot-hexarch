@@ -11,16 +11,18 @@ public class ShoppingCart {
     private Integer id;
     private final List<CartItem> items;
     private Status status;
+    private Integer totalQuantity;
 
     public ShoppingCart() {
         this.status = Status.OPEN;
         this.items = new ArrayList<>();
     }
 
-    protected ShoppingCart(Integer id, List<CartItem> items, Status status) {
+    protected ShoppingCart(Integer id, List<CartItem> items, Status status, Integer totalQuantity) {
         this.id = id;
         this.items = items;
         this.status = status;
+        this.totalQuantity = totalQuantity;
     }
 
     public void add(CartItem item) {
@@ -37,13 +39,13 @@ public class ShoppingCart {
     public void checkout(CheckoutService checkoutService) {
         this.checkStatus();
         boolean isValid = checkoutService.validateCart(this);
-        if(!isValid) throw new NotAvailableProductsException();
+        if (!isValid) throw new NotAvailableProductsException();
 
         this.status = Status.COMPLETE;
     }
 
     private void checkStatus() {
-        if(status != Status.OPEN) throw new IllegalStateException("Operation not allowed, checkout already performed");
+        if (status != Status.OPEN) throw new IllegalStateException("Operation not allowed, checkout already performed");
     }
 
     public List<CartItem> items() {
@@ -56,6 +58,10 @@ public class ShoppingCart {
 
     public Status status() {
         return status;
+    }
+
+    public Integer totalQuantity() {
+        return totalQuantity;
     }
 
     public enum Status {

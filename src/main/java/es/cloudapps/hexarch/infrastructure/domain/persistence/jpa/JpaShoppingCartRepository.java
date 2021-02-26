@@ -46,7 +46,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
             springCartItemRepository.save(jpaCartItem);
         });
 
-        return new FillableShoppingCart(storedCart.id, cart.items(), cart.status());
+        return new FillableShoppingCart(storedCart.id, cart.items(), cart.status(), 0);
     }
 
     private JpaProduct map(Product product) {
@@ -76,7 +76,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
                 .collect(Collectors.toList());
 
         return cart.map(opt -> new FillableShoppingCart(
-                cartId, cartItems, map(opt.status)
+                cartId, cartItems, map(opt.status), 0
         ));
     }
 

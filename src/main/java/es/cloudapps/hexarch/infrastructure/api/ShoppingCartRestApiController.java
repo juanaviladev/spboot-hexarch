@@ -47,10 +47,5 @@ public class ShoppingCartRestApiController {
     public void delete(@PathVariable Integer cartId, @PathVariable Integer prodId) {
         shoppingCartService.removeFromCart(new RemoveFromCartReq(cartId, prodId));
     }
-
-    @GetMapping("/cartexpenditure")
-    public CartExpenditureResp getCartExpenditure() {
-        return shoppingCartService.getCartExpenditure(new CartExpenditureReq());
-    }
-
+    
 }

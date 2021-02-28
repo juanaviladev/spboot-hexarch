@@ -58,7 +58,7 @@ public class ShoppingCartService implements ShoppingCartServicePort {
         ShoppingCart shoppingCart = shoppingCartRepository.get(params.id)
                 .orElseThrow(NotFoundException::new);
 
-        return new GetCartResp(shoppingCart.id(), map(shoppingCart.items()), shoppingCart.status().toString());
+        return new GetCartResp(shoppingCart.id(), map(shoppingCart.items()), shoppingCart.status().toString(), shoppingCart.totalQuantity());
     }
 
     private List<CartItemDto> map(List<CartItem> items) {
@@ -96,4 +96,17 @@ public class ShoppingCartService implements ShoppingCartServicePort {
 
         return new RemoveFromCartResp();
     }
+
+    @Override
+    public CartExpenditureResp getCartExpenditure(CartExpenditureReq params) {
+        return new CartExpenditureResp(mapToList(shoppingCartRepository.getAllCompleted()));
+    }
+
+    private List<ExpenditureDto> mapToList(List<ShoppingCart> items) {
+        return items
+                .stream()
+                .map(item -> new ExpenditureDto(item.id(), item.totalQuantity()))
+                .collect(Collectors.toList());
+    }
+
 }

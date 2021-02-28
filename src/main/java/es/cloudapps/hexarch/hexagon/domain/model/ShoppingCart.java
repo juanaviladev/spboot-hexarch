@@ -5,6 +5,7 @@ import es.cloudapps.hexarch.hexagon.domain.services.CheckoutService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ShoppingCart {
 
@@ -16,6 +17,7 @@ public class ShoppingCart {
     public ShoppingCart() {
         this.status = Status.OPEN;
         this.items = new ArrayList<>();
+        this.totalQuantity = 0;
     }
 
     protected ShoppingCart(Integer id, List<CartItem> items, Status status, Integer totalQuantity) {
@@ -27,13 +29,22 @@ public class ShoppingCart {
 
     public void add(CartItem item) {
         this.checkStatus();
-        this.items.remove(item);
+        if (this.items.remove(item))
+            totalQuantity -= item.quantity();
         this.items.add(item);
+        this.totalQuantity += item.quantity();
     }
 
     public void remove(Product product) {
         this.checkStatus();
-        this.items.removeIf(item -> item.product().equals(product));
+        Optional<CartItem> cartItem = this.items
+                .stream()
+                .filter(item -> item.product().equals(product))
+                .findFirst();
+        if (cartItem.isPresent()) {
+            this.totalQuantity -= cartItem.get().quantity();
+            this.items.removeIf(item -> item.product().equals(product));
+        }
     }
 
     public void checkout(CheckoutService checkoutService) {

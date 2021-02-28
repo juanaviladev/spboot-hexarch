@@ -11,4 +11,7 @@ public class JpaShoppingCart {
 
     @Enumerated
     public JpaCartStatus status;
+
+    @Column
+    public Integer totalQuantity;
 }

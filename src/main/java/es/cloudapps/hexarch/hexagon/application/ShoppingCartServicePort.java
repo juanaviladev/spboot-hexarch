@@ -81,11 +81,13 @@ public interface ShoppingCartServicePort {
         public Integer id;
         public List<CartItemDto> items;
         public String status;
+        public Integer totalQuantity;
 
-        public GetCartResp(Integer id, List<CartItemDto> items, String status) {
+        public GetCartResp(Integer id, List<CartItemDto> items, String status, Integer totalQuantity) {
             this.id = id;
             this.items = items;
             this.status = status;
+            this.totalQuantity = totalQuantity;
         }
 
         public GetCartResp() {

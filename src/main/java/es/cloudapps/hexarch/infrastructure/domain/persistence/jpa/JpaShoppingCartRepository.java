@@ -5,8 +5,6 @@ import es.cloudapps.hexarch.hexagon.domain.model.Product;
 import es.cloudapps.hexarch.hexagon.domain.model.Product.Name;
 import es.cloudapps.hexarch.hexagon.domain.model.ShoppingCart;
 import es.cloudapps.hexarch.hexagon.domain.services.ShoppingCartRepository;
-import es.cloudapps.hexarch.infrastructure.domain.persistence.jpa.SpringCartItemRepository;
-import es.cloudapps.hexarch.infrastructure.domain.persistence.jpa.SpringShoppingCartRepository;
 import es.cloudapps.hexarch.infrastructure.domain.persistence.jpa.model.*;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +32,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
         else storedCart = shoppingCartRepository.findById(cartId).orElseThrow(IllegalStateException::new);
 
         storedCart.status = map(cart.status());
+        storedCart.totalQuantity = cart.totalQuantity();
 
         springCartItemRepository.deleteByCartId(storedCart.id);
 
@@ -46,7 +45,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
             springCartItemRepository.save(jpaCartItem);
         });
 
-        return new FillableShoppingCart(storedCart.id, cart.items(), cart.status(), 0);
+        return new FillableShoppingCart(storedCart.id, cart.items(), cart.status(), cart.totalQuantity());
     }
 
     private JpaProduct map(Product product) {
@@ -76,7 +75,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
                 .collect(Collectors.toList());
 
         return cart.map(opt -> new FillableShoppingCart(
-                cartId, cartItems, map(opt.status), 0
+                cartId, cartItems, map(opt.status), opt.totalQuantity
         ));
     }
 
@@ -103,4 +102,14 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
     private Product map(JpaProduct product) {
         return new FillableProduct(product.id, new Name(product.name));
     }
+
+    @Override
+    public List<ShoppingCart> getAllCompleted() {
+        List<JpaShoppingCart> cartList = shoppingCartRepository.findAllByStatus(JpaCartStatus.COMPLETE);
+        return cartList.stream()
+                .map(cart -> new FillableShoppingCart(cart.id, null, map(cart.status), cart.totalQuantity))
+                .collect(Collectors.toList());
+    }
+
+
 }

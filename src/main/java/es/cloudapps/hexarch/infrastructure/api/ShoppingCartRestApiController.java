@@ -1,6 +1,5 @@
 package es.cloudapps.hexarch.infrastructure.api;
 
-import es.cloudapps.hexarch.hexagon.application.ProductServicePort;
 import es.cloudapps.hexarch.hexagon.application.ShoppingCartServicePort;
 import es.cloudapps.hexarch.hexagon.application.ShoppingCartServicePort.*;
 import es.cloudapps.hexarch.hexagon.domain.exception.NotAvailableProductsException;
@@ -48,4 +47,10 @@ public class ShoppingCartRestApiController {
     public void delete(@PathVariable Integer cartId, @PathVariable Integer prodId) {
         shoppingCartService.removeFromCart(new RemoveFromCartReq(cartId, prodId));
     }
+
+    @GetMapping("/cartexpenditure")
+    public CartExpenditureResp getCartExpenditure() {
+        return shoppingCartService.getCartExpenditure(new CartExpenditureReq());
+    }
+
 }

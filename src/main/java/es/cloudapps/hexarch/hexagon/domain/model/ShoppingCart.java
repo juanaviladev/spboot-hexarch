@@ -29,8 +29,14 @@ public class ShoppingCart {
 
     public void add(CartItem item) {
         this.checkStatus();
-        if (this.items.remove(item))
-            totalQuantity -= item.quantity();
+        Optional<CartItem> cartItem = this.items
+                .stream()
+                .filter(it -> it.product().equals(item.product()))
+                .findFirst();
+        if (cartItem.isPresent()) {
+            this.items.remove(item);
+            this.totalQuantity -= cartItem.get().quantity();
+        }
         this.items.add(item);
         this.totalQuantity += item.quantity();
     }
@@ -73,6 +79,10 @@ public class ShoppingCart {
 
     public Integer totalQuantity() {
         return totalQuantity;
+    }
+
+    public void addToTotalQuantity(Integer quantity) {
+        this.totalQuantity += quantity;
     }
 
     public enum Status {

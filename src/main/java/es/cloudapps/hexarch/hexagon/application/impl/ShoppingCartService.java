@@ -32,6 +32,9 @@ public class ShoppingCartService implements ShoppingCartServicePort {
         params.items.stream()
                 .map(this::map)
                 .forEach(shoppingCart::add);
+        params.items.stream().forEach(item -> {
+            shoppingCart.addToTotalQuantity(item.quantity);
+        });
 
         ShoppingCart saved = shoppingCartRepository.save(shoppingCart);
         return new RegisterNewCartResp(saved.id(), params.items);
@@ -93,6 +96,7 @@ public class ShoppingCartService implements ShoppingCartServicePort {
         ShoppingCart shoppingCart = shoppingCartRepository.get(params.cartId).orElseThrow(NotFoundException::new);
 
         shoppingCart.remove(product);
+        shoppingCartRepository.save(shoppingCart);
 
         return new RemoveFromCartResp();
     }

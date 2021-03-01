@@ -1,6 +1,6 @@
 package es.cloudapps.hexarch.hexagon.application.impl;
 
-import es.cloudapps.hexarch.hexagon.application.ShoppingCartServicePort;
+import es.cloudapps.hexarch.hexagon.application.ShoppingCartCommandServicePort;
 import es.cloudapps.hexarch.hexagon.domain.exception.NotAvailableProductsException;
 import es.cloudapps.hexarch.hexagon.domain.exception.NotFoundException;
 import es.cloudapps.hexarch.hexagon.domain.model.CartItem;
@@ -10,16 +10,13 @@ import es.cloudapps.hexarch.hexagon.domain.services.CheckoutService;
 import es.cloudapps.hexarch.hexagon.domain.services.ProductRepository;
 import es.cloudapps.hexarch.hexagon.domain.services.ShoppingCartRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class ShoppingCartService implements ShoppingCartServicePort {
+public class ShoppingCartCommandService implements ShoppingCartCommandServicePort {
 
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductRepository productRepository;
     private final CheckoutService checkoutService;
 
-    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CheckoutService checkoutService) {
+    public ShoppingCartCommandService(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CheckoutService checkoutService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.productRepository = productRepository;
         this.checkoutService = checkoutService;
@@ -32,7 +29,7 @@ public class ShoppingCartService implements ShoppingCartServicePort {
         params.items.stream()
                 .map(this::map)
                 .forEach(shoppingCart::add);
-        params.items.stream().forEach(item -> {
+        params.items.forEach(item -> {
             shoppingCart.addToTotalQuantity(item.quantity);
         });
 
@@ -54,19 +51,6 @@ public class ShoppingCartService implements ShoppingCartServicePort {
         shoppingCartRepository.save(shoppingCart);
 
         return new CheckoutCartResp(shoppingCart.id(), shoppingCart.status().toString());
-    }
-
-    @Override
-    public GetCartResp getCart(GetCartReq params) {
-        ShoppingCart shoppingCart = shoppingCartRepository.get(params.id)
-                .orElseThrow(NotFoundException::new);
-
-        return new GetCartResp(shoppingCart.id(), map(shoppingCart.items()), shoppingCart.status().toString(), shoppingCart.totalQuantity());
-    }
-
-    private List<CartItemDto> map(List<CartItem> items) {
-        return items.stream().map(item -> new CartItemDto(item.product().id(), item.quantity()))
-                .collect(Collectors.toList());
     }
 
     @Override

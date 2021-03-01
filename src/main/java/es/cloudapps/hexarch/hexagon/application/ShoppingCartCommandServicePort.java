@@ -4,7 +4,7 @@ import es.cloudapps.hexarch.hexagon.domain.exception.NotAvailableProductsExcepti
 
 import java.util.List;
 
-public interface ShoppingCartServicePort {
+public interface ShoppingCartCommandServicePort {
 
     RegisterNewCartResp registerNewCart(RegisterNewCartReq params);
     class RegisterNewCartReq {
@@ -66,34 +66,6 @@ public interface ShoppingCartServicePort {
         }
     }
 
-    GetCartResp getCart(GetCartReq params);
-    class GetCartReq {
-        public Integer id;
-
-        public GetCartReq(Integer id) {
-            this.id = id;
-        }
-
-        public GetCartReq() {
-        }
-    }
-    class GetCartResp {
-        public Integer id;
-        public List<CartItemDto> items;
-        public String status;
-        public Integer totalQuantity;
-
-        public GetCartResp(Integer id, List<CartItemDto> items, String status, Integer totalQuantity) {
-            this.id = id;
-            this.items = items;
-            this.status = status;
-            this.totalQuantity = totalQuantity;
-        }
-
-        public GetCartResp() {
-        }
-    }
-
     RemoveCartResp removeCart(RemoveCartReq params);
     class RemoveCartReq {
         public Integer id;
@@ -141,10 +113,6 @@ public interface ShoppingCartServicePort {
         }
     }
     class RemoveFromCartResp {
-
     }
 
 }
-
-
-

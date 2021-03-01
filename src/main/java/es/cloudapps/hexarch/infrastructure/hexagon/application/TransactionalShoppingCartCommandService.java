@@ -1,6 +1,6 @@
 package es.cloudapps.hexarch.infrastructure.hexagon.application;
 
-import es.cloudapps.hexarch.hexagon.application.ShoppingCartServicePort;
+import es.cloudapps.hexarch.hexagon.application.ShoppingCartCommandServicePort;
 import es.cloudapps.hexarch.hexagon.domain.exception.NotAvailableProductsException;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -10,11 +10,11 @@ import javax.transaction.Transactional;
 @Primary
 @Service
 @Transactional
-public class TransactionalShoppingCartService implements ShoppingCartServicePort {
+public class TransactionalShoppingCartCommandService implements ShoppingCartCommandServicePort {
 
-    private ShoppingCartServicePort shoppingCartServicePort;
+    private final ShoppingCartCommandServicePort shoppingCartServicePort;
 
-    public TransactionalShoppingCartService(ShoppingCartServicePort shoppingCartServicePort) {
+    public TransactionalShoppingCartCommandService(ShoppingCartCommandServicePort shoppingCartServicePort) {
         this.shoppingCartServicePort = shoppingCartServicePort;
     }
 
@@ -26,11 +26,6 @@ public class TransactionalShoppingCartService implements ShoppingCartServicePort
     @Override
     public CheckoutCartResp checkoutCart(CheckoutCartReq params) throws NotAvailableProductsException {
         return shoppingCartServicePort.checkoutCart(params);
-    }
-
-    @Override
-    public GetCartResp getCart(GetCartReq params) {
-        return shoppingCartServicePort.getCart(params);
     }
 
     @Override

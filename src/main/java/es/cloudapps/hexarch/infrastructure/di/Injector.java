@@ -1,13 +1,7 @@
 package es.cloudapps.hexarch.infrastructure.di;
 
-import es.cloudapps.hexarch.hexagon.application.CartExpenditureServicePort;
-import es.cloudapps.hexarch.hexagon.application.ProductCommandServicePort;
-import es.cloudapps.hexarch.hexagon.application.ProductQueryServicePort;
-import es.cloudapps.hexarch.hexagon.application.ShoppingCartServicePort;
-import es.cloudapps.hexarch.hexagon.application.impl.CartExpenditureService;
-import es.cloudapps.hexarch.hexagon.application.impl.ProductCommandService;
-import es.cloudapps.hexarch.hexagon.application.impl.ProductQueryService;
-import es.cloudapps.hexarch.hexagon.application.impl.ShoppingCartService;
+import es.cloudapps.hexarch.hexagon.application.*;
+import es.cloudapps.hexarch.hexagon.application.impl.*;
 import es.cloudapps.hexarch.hexagon.domain.services.CheckoutService;
 import es.cloudapps.hexarch.hexagon.domain.services.ProductRepository;
 import es.cloudapps.hexarch.hexagon.domain.services.ShoppingCartRepository;
@@ -23,13 +17,18 @@ public class Injector {
     }
 
     @Bean
-    public ProductCommandServicePort productCommandServicePort(ProductRepository repository){
+    public ProductCommandServicePort productCommandServicePort(ProductRepository repository) {
         return new ProductCommandService(repository);
     }
 
     @Bean
-    public ShoppingCartServicePort shoppingCartServicePort(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CheckoutService checkoutService) {
-        return new ShoppingCartService(
+    public ShoppingCartQueryServicePort shoppingCartQueryServicePort(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CheckoutService checkoutService) {
+        return new ShoppingCartQueryService(shoppingCartRepository);
+    }
+
+    @Bean
+    public ShoppingCartCommandServicePort shoppingCartCommandServicePort(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CheckoutService checkoutService) {
+        return new ShoppingCartCommandService(
                 shoppingCartRepository,
                 productRepository,
                 checkoutService

@@ -1,6 +1,8 @@
 package es.cloudapps.hexarch.hexagon.application.impl;
 
-import es.cloudapps.hexarch.hexagon.application.ShoppingCartServicePort.*;
+import es.cloudapps.hexarch.hexagon.application.ShoppingCartCommandServicePort;
+import es.cloudapps.hexarch.hexagon.application.ShoppingCartCommandServicePort.*;
+import es.cloudapps.hexarch.hexagon.application.ShoppingCartQueryServicePort.*;
 import es.cloudapps.hexarch.hexagon.domain.model.CartItem;
 import es.cloudapps.hexarch.hexagon.domain.model.Product;
 import es.cloudapps.hexarch.hexagon.domain.model.ShoppingCart;
@@ -28,7 +30,8 @@ public class ShoppingCartServiceTest {
 
     private CheckoutService checkoutService;
 
-    private ShoppingCartService shoppingCartService;
+    private ShoppingCartQueryService shoppingCartService;
+    private ShoppingCartCommandService shoppingCartCommandService;
 
     @Before
     public void setUp() {
@@ -36,7 +39,8 @@ public class ShoppingCartServiceTest {
         this.productRepository = mock(ProductRepository.class);
         this.checkoutService = mock(CheckoutService.class);
 
-        this.shoppingCartService = new ShoppingCartService(
+        this.shoppingCartService = new ShoppingCartQueryService(shoppingCartRepository);
+        this.shoppingCartCommandService = new ShoppingCartCommandService(
                 shoppingCartRepository,
                 productRepository,
                 checkoutService
@@ -55,7 +59,7 @@ public class ShoppingCartServiceTest {
         when(shoppingCartRepository.get(1)).thenReturn(Optional.of(shoppingCart));
 
         when(checkoutService.validateCart(any())).thenReturn(true);
-        CheckoutCartResp resp = shoppingCartService.checkoutCart(req);
+        CheckoutCartResp resp = shoppingCartCommandService.checkoutCart(req);
 
         assertThat(resp.status, is(equalTo("COMPLETE")));
     }
@@ -81,8 +85,8 @@ public class ShoppingCartServiceTest {
         assertThat(resp.items, hasSize(3));
     }
 
-    private static CartItemDto dtoItemWithIdAndQty(int id, int qty) {
-        return new CartItemDto(id, qty);
+    private static ShoppingCartCommandServicePort.CartItemDto dtoItemWithIdAndQty(int id, int qty) {
+        return new ShoppingCartCommandServicePort.CartItemDto(id, qty);
     }
 
     private static CartItem itemWithIdAndQty(int id, int qty) {

@@ -1,7 +1,12 @@
 package es.cloudapps.hexarch.infrastructure.di;
 
-import es.cloudapps.hexarch.hexagon.application.*;
-import es.cloudapps.hexarch.hexagon.application.impl.*;
+import es.cloudapps.hexarch.hexagon.application.ProductCommandServicePort;
+import es.cloudapps.hexarch.hexagon.application.ProductQueryServicePort;
+import es.cloudapps.hexarch.hexagon.application.ShoppingCartCommandServicePort;
+import es.cloudapps.hexarch.hexagon.application.impl.ProductCommandService;
+import es.cloudapps.hexarch.hexagon.application.impl.ProductQueryService;
+import es.cloudapps.hexarch.hexagon.application.impl.ShoppingCartCommandService;
+import es.cloudapps.hexarch.hexagon.application.impl.ShoppingCartQueryService;
 import es.cloudapps.hexarch.hexagon.domain.services.CheckoutService;
 import es.cloudapps.hexarch.hexagon.domain.services.ProductRepository;
 import es.cloudapps.hexarch.hexagon.domain.services.ShoppingCartRepository;
@@ -22,7 +27,7 @@ public class Injector {
     }
 
     @Bean
-    public ShoppingCartQueryServicePort shoppingCartQueryServicePort(ShoppingCartRepository shoppingCartRepository,
+    public ShoppingCartQueryService shoppingCartQueryServicePort(ShoppingCartRepository shoppingCartRepository,
                                                                      ProductRepository productRepository, CheckoutService checkoutService) {
         return new ShoppingCartQueryService(shoppingCartRepository);
     }
@@ -34,10 +39,5 @@ public class Injector {
                 productRepository,
                 checkoutService
         );
-    }
-
-    @Bean
-    public CartExpenditureServicePort cartExpenditureServicePort(ShoppingCartRepository shoppingCartRepository) {
-        return new ShoppingCartQueryService(shoppingCartRepository);
     }
 }

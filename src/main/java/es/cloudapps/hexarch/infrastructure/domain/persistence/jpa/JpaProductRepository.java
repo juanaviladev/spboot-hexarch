@@ -31,6 +31,7 @@ public class JpaProductRepository implements ProductRepository {
         else storedProduct = springProductRepository.findById(productId).orElseThrow(IllegalStateException::new);
 
         storedProduct.name = product.name();
+        storedProduct.cost = product.cost();
 
         springProductRepository.save(storedProduct);
 
@@ -51,7 +52,7 @@ public class JpaProductRepository implements ProductRepository {
 
     @Override
     public List<Product> all() {
-        return stream(springProductRepository.findAll().spliterator(),false)
+        return stream(springProductRepository.findAll().spliterator(), false)
                 .map(jpaProduct -> new FillableProduct(jpaProduct.id, new Product.Name(jpaProduct.name), jpaProduct.cost))
                 .collect(Collectors.toList());
 

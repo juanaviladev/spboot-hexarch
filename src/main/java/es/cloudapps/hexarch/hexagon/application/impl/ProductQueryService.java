@@ -19,7 +19,7 @@ public class ProductQueryService implements ProductQueryServicePort {
     @Override
     public FindResp find(FindReq params) {
         Product existing = productRepository.get(params.id).orElseThrow(NotFoundException::new);
-        return new FindResp(existing.id(), existing.name());
+        return new FindResp(existing.id(), existing.name(), existing.cost());
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ProductQueryService implements ProductQueryServicePort {
 
     private List<ProductDto> map(List<Product> all) {
         return all.stream()
-                .map(product -> new ProductDto(product.id(), product.name()))
+                .map(product -> new ProductDto(product.id(), product.name(), product.cost()))
                 .collect(Collectors.toList());
     }
 }

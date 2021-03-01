@@ -18,10 +18,12 @@ public interface ProductQueryServicePort {
     class FindResp {
         public Integer id;
         public String name;
+        public Integer cost;
 
-        public FindResp(Integer id, String name) {
+        public FindResp(Integer id, String name, Integer cost) {
             this.id = id;
             this.name = name;
+            this.cost = cost;
         }
 
         public FindResp() {
@@ -44,10 +46,12 @@ public interface ProductQueryServicePort {
     class ProductDto {
         public Integer id;
         public String name;
+        public Integer cost;
 
-        public ProductDto(Integer id, String name) {
+        public ProductDto(Integer id, String name, Integer cost) {
             this.id = id;
             this.name = name;
+            this.cost = cost;
         }
 
         public ProductDto() {

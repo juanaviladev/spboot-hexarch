@@ -48,8 +48,4 @@ public class TransactionalShoppingCartService implements ShoppingCartServicePort
         return shoppingCartServicePort.removeFromCart(params);
     }
 
-    @Override
-    public CartExpenditureResp getCartExpenditure(CartExpenditureReq params) {
-        return shoppingCartServicePort.getCartExpenditure(params);
-    }
 }

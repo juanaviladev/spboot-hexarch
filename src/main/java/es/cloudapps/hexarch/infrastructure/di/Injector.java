@@ -1,7 +1,9 @@
 package es.cloudapps.hexarch.infrastructure.di;
 
+import es.cloudapps.hexarch.hexagon.application.CartExpenditureServicePort;
 import es.cloudapps.hexarch.hexagon.application.ProductServicePort;
 import es.cloudapps.hexarch.hexagon.application.ShoppingCartServicePort;
+import es.cloudapps.hexarch.hexagon.application.impl.CartExpenditureService;
 import es.cloudapps.hexarch.hexagon.application.impl.ProductService;
 import es.cloudapps.hexarch.hexagon.application.impl.ShoppingCartService;
 import es.cloudapps.hexarch.hexagon.domain.services.CheckoutService;
@@ -25,5 +27,10 @@ public class Injector {
                 productRepository,
                 checkoutService
         );
+    }
+
+    @Bean
+    public CartExpenditureServicePort cartExpenditureServicePort(ShoppingCartRepository shoppingCartRepository) {
+        return new CartExpenditureService(shoppingCartRepository);
     }
 }

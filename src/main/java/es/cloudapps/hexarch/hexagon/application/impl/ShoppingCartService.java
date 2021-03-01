@@ -101,16 +101,4 @@ public class ShoppingCartService implements ShoppingCartServicePort {
         return new RemoveFromCartResp();
     }
 
-    @Override
-    public CartExpenditureResp getCartExpenditure(CartExpenditureReq params) {
-        return new CartExpenditureResp(mapToList(shoppingCartRepository.getAllCompleted()));
-    }
-
-    private List<ExpenditureDto> mapToList(List<ShoppingCart> items) {
-        return items
-                .stream()
-                .map(item -> new ExpenditureDto(item.id(), item.totalQuantity()))
-                .collect(Collectors.toList());
-    }
-
 }

@@ -45,4 +45,9 @@ public class ShoppingCartCommandRestApiController {
         shoppingCartService.removeFromCart(new RemoveFromCartReq(cartId, prodId));
     }
 
+    @DeleteMapping("/shoppingcarts/{id}")
+    public void delete(@PathVariable Integer id) {
+        shoppingCartService.removeCart(new RemoveCartReq(id));
+    }
+
 }

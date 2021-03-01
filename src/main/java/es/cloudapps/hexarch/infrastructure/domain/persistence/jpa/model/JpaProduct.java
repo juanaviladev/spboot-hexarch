@@ -10,4 +10,5 @@ public class JpaProduct {
     public Integer id;
 
     public String name;
+    public Integer cost;
 }

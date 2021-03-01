@@ -1,4 +1,4 @@
-package es.cloudapps.hexarch.infrastructure.api;
+package es.cloudapps.hexarch.infrastructure.api.queries;
 
 import es.cloudapps.hexarch.hexagon.application.ShoppingCartQueryServicePort;
 import es.cloudapps.hexarch.hexagon.application.ShoppingCartQueryServicePort.GetCartReq;

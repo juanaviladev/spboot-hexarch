@@ -22,7 +22,8 @@ public class Injector {
     }
 
     @Bean
-    public ShoppingCartQueryServicePort shoppingCartQueryServicePort(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CheckoutService checkoutService) {
+    public ShoppingCartQueryServicePort shoppingCartQueryServicePort(ShoppingCartRepository shoppingCartRepository,
+                                                                     ProductRepository productRepository, CheckoutService checkoutService) {
         return new ShoppingCartQueryService(shoppingCartRepository);
     }
 
@@ -37,6 +38,6 @@ public class Injector {
 
     @Bean
     public CartExpenditureServicePort cartExpenditureServicePort(ShoppingCartRepository shoppingCartRepository) {
-        return new CartExpenditureService(shoppingCartRepository);
+        return new ShoppingCartQueryService(shoppingCartRepository);
     }
 }

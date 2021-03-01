@@ -1,4 +1,4 @@
-package es.cloudapps.hexarch.infrastructure.api;
+package es.cloudapps.hexarch.infrastructure.api.queries;
 
 import es.cloudapps.hexarch.hexagon.application.ProductQueryServicePort;
 import org.springframework.web.bind.annotation.GetMapping;

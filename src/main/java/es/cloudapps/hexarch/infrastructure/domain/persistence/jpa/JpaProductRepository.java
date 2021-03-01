@@ -34,7 +34,7 @@ public class JpaProductRepository implements ProductRepository {
 
         springProductRepository.save(storedProduct);
 
-        return new FillableProduct(storedProduct.id, new Product.Name(product.name()));
+        return new FillableProduct(storedProduct.id, new Product.Name(product.name()), storedProduct.cost);
     }
 
     @Override
@@ -46,13 +46,13 @@ public class JpaProductRepository implements ProductRepository {
     public Optional<Product> get(Integer productId) {
         Optional<JpaProduct> storedProduct = springProductRepository.findById(productId);
         return storedProduct.map(stored ->
-                new FillableProduct(productId, new Product.Name(stored.name)));
+                new FillableProduct(productId, new Product.Name(stored.name), stored.cost));
     }
 
     @Override
     public List<Product> all() {
         return stream(springProductRepository.findAll().spliterator(),false)
-                .map(jpaProduct -> new FillableProduct(jpaProduct.id, new Product.Name(jpaProduct.name)))
+                .map(jpaProduct -> new FillableProduct(jpaProduct.id, new Product.Name(jpaProduct.name), jpaProduct.cost))
                 .collect(Collectors.toList());
 
     }

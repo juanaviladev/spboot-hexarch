@@ -32,7 +32,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
         else storedCart = shoppingCartRepository.findById(cartId).orElseThrow(IllegalStateException::new);
 
         storedCart.status = map(cart.status());
-        storedCart.totalQuantity = cart.totalQuantity();
+        storedCart.totalQuantity = cart.total();
 
         springCartItemRepository.deleteByCartId(storedCart.id);
 
@@ -45,7 +45,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
             springCartItemRepository.save(jpaCartItem);
         });
 
-        return new FillableShoppingCart(storedCart.id, cart.items(), cart.status(), cart.totalQuantity());
+        return new FillableShoppingCart(storedCart.id, cart.items(), cart.status(), cart.total());
     }
 
     private JpaProduct map(Product product) {
@@ -100,7 +100,7 @@ public class JpaShoppingCartRepository implements ShoppingCartRepository {
     }
 
     private Product map(JpaProduct product) {
-        return new FillableProduct(product.id, new Name(product.name));
+        return new FillableProduct(product.id, new Name(product.name), product.cost);
     }
 
     @Override

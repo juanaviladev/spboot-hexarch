@@ -39,4 +39,8 @@ public class CartItem {
     public int hashCode() {
         return Objects.hash(product);
     }
+
+    public Integer cost() {
+        return this.quantity() * this.product().cost();
+    }
 }

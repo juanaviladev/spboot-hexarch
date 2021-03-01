@@ -6,39 +6,33 @@ import es.cloudapps.hexarch.hexagon.domain.services.CheckoutService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ShoppingCart {
 
     private Integer id;
     private final List<CartItem> items;
     private Status status;
-    private Integer totalQuantity;
+    private Integer total;
 
     public ShoppingCart() {
         this.status = Status.OPEN;
         this.items = new ArrayList<>();
-        this.totalQuantity = 0;
+        this.total = 0;
     }
 
     protected ShoppingCart(Integer id, List<CartItem> items, Status status, Integer totalQuantity) {
         this.id = id;
         this.items = items;
         this.status = status;
-        this.totalQuantity = totalQuantity;
+        this.total = totalQuantity;
     }
 
     public void add(CartItem item) {
         this.checkStatus();
-        Optional<CartItem> cartItem = this.items
-                .stream()
-                .filter(it -> it.product().equals(item.product()))
-                .findFirst();
-        if (cartItem.isPresent()) {
-            this.items.remove(item);
-            this.totalQuantity -= cartItem.get().quantity();
-        }
+        this.remove(item.product());
         this.items.add(item);
-        this.totalQuantity += item.quantity();
+        this.total += item.cost();
     }
 
     public void remove(Product product) {
@@ -47,10 +41,11 @@ public class ShoppingCart {
                 .stream()
                 .filter(item -> item.product().equals(product))
                 .findFirst();
-        if (cartItem.isPresent()) {
-            this.totalQuantity -= cartItem.get().quantity();
+
+        cartItem.ifPresent(cartItem1 -> {
+            this.total -= cartItem1.cost();
             this.items.removeIf(item -> item.product().equals(product));
-        }
+        });
     }
 
     public void checkout(CheckoutService checkoutService) {
@@ -77,12 +72,8 @@ public class ShoppingCart {
         return status;
     }
 
-    public Integer totalQuantity() {
-        return totalQuantity;
-    }
-
-    public void addToTotalQuantity(Integer quantity) {
-        this.totalQuantity += quantity;
+    public Integer total() {
+        return total;
     }
 
     public enum Status {

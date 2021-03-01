@@ -5,9 +5,11 @@ public interface ProductCommandServicePort {
     RegisterNewResp registerNew(RegisterNewReq params);
     class RegisterNewReq {
         public String name;
+        public Integer cost;
 
-        public RegisterNewReq(String name) {
+        public RegisterNewReq(String name, Integer cost) {
             this.name = name;
+            this.cost = cost;
         }
 
         public RegisterNewReq() {

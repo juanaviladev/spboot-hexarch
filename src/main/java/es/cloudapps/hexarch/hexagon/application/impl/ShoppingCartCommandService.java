@@ -29,9 +29,6 @@ public class ShoppingCartCommandService implements ShoppingCartCommandServicePor
         params.items.stream()
                 .map(this::map)
                 .forEach(shoppingCart::add);
-        params.items.forEach(item -> {
-            shoppingCart.addToTotalQuantity(item.quantity);
-        });
 
         ShoppingCart saved = shoppingCartRepository.save(shoppingCart);
         return new RegisterNewCartResp(saved.id(), params.items);

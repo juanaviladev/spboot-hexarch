@@ -1,4 +1,4 @@
-package es.cloudapps.hexarch.infrastructure.api;
+package es.cloudapps.hexarch.infrastructure.api.commands;
 
 import es.cloudapps.hexarch.hexagon.application.ShoppingCartCommandServicePort;
 import es.cloudapps.hexarch.hexagon.application.ShoppingCartCommandServicePort.*;

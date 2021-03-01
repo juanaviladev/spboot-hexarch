@@ -15,7 +15,7 @@ public class ProductCommandService implements ProductCommandServicePort {
 
     @Override
     public RegisterNewResp registerNew(RegisterNewReq params) {
-        Product product = new Product(new Product.Name(params.name));
+        Product product = new Product(new Product.Name(params.name), params.cost);
         Product saved = productRepository.save(product);
         return new RegisterNewResp(saved.id(), saved.name());
     }

@@ -35,10 +35,12 @@ public class ProductServiceTest {
     public void shouldCreateANewProduct() {
         RegisterNewReq req = new RegisterNewReq();
         req.name = "Test product";
+        req.cost = 1;
 
         Product product = mock(Product.class);
         when(product.id()).thenReturn(1);
         when(product.name()).thenReturn("Test product");
+        when(product.cost()).thenReturn(1);
 
         when(repository.save(any())).thenReturn(product);
 

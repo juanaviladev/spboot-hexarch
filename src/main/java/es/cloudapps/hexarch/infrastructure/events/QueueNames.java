@@ -9,4 +9,7 @@ public class QueueNames {
     public static final String REMOVE_FROM_CART = "removeFromCart";
     public static final String REMOVE_CART = "removeCart";
 
+    public static final String REGISTER_NEW_PRODUCT = "registerNewProduct";
+    public static final String REMOVE_PRODUCT = "deleteProduct";
+
 }

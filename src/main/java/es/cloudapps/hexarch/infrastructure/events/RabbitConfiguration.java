@@ -38,4 +38,14 @@ public class RabbitConfiguration {
         return new Queue(QueueNames.REMOVE_CART, false);
     }
 
+    @Bean
+    public Queue registerNewProductQueue() {
+        return new Queue(QueueNames.REGISTER_NEW_PRODUCT, false);
+    }
+
+    @Bean
+    public Queue deleteProductQueue() {
+        return new Queue(QueueNames.REMOVE_PRODUCT, false);
+    }
+
 }

@@ -1,9 +1,11 @@
 package es.cloudapps.hexarch.hexagon.application;
 
+import java.io.Serializable;
+
 public interface ProductCommandServicePort {
 
     RegisterNewResp registerNew(RegisterNewReq params);
-    class RegisterNewReq {
+    class RegisterNewReq implements Serializable {
         public String name;
         public Integer cost;
 
@@ -29,7 +31,7 @@ public interface ProductCommandServicePort {
     }
 
     RemoveResp remove(RemoveReq params);
-    class RemoveReq {
+    class RemoveReq implements Serializable {
         public Integer id;
 
         public RemoveReq(Integer id) {

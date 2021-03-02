@@ -27,20 +27,8 @@ public class ShoppingCartCommandRestApiController {
 
     @PatchMapping("/shoppingcarts/{id}")
     public void patch(@PathVariable Integer id) {
-
         shoppingCartEventPublisher.publishUpdateCartView(id);
         shoppingCartEventPublisher.publishCheckoutCart(new CheckoutCartReq(id));
-
-        /*
-        try {
-            shoppingCartService.checkoutCart(new CheckoutCartReq(id));
-            return ResponseEntity.noContent().build();
-        } catch (NotAvailableProductsException ex) {
-            return ResponseEntity
-                    .status(HttpStatus.EXPECTATION_FAILED)
-                    .build();
-        }
-        */
     }
 
     @DeleteMapping("/shoppingcarts/{cartId}/product/{prodId}")

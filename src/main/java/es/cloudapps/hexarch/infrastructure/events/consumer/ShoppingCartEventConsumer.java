@@ -25,22 +25,22 @@ public class ShoppingCartEventConsumer {
     }
 
     @RabbitListener(queues = QueueNames.ADD_TO_CART, ackMode = "AUTO")
-    public void publishAddToCart(ShoppingCartCommandServicePort.AddToCartReq req) {
+    public void consumeAddToCart(ShoppingCartCommandServicePort.AddToCartReq req) {
         shoppingCartService.addToCart(req);
     }
 
     @RabbitListener(queues = QueueNames.CHECKOUT_CART, ackMode = "AUTO")
-    public void publishCheckoutCart(ShoppingCartCommandServicePort.CheckoutCartReq req) {
+    public void consumeCheckoutCart(ShoppingCartCommandServicePort.CheckoutCartReq req) {
         shoppingCartService.checkoutCart(req);
     }
 
     @RabbitListener(queues = QueueNames.REMOVE_FROM_CART, ackMode = "AUTO")
-    public void publishRemoveFromCart(ShoppingCartCommandServicePort.RemoveFromCartReq req) {
+    public void consumeRemoveFromCart(ShoppingCartCommandServicePort.RemoveFromCartReq req) {
         shoppingCartService.removeFromCart(req);
     }
 
     @RabbitListener(queues = QueueNames.REMOVE_CART, ackMode = "AUTO")
-    public void publishRemoveCart(ShoppingCartCommandServicePort.RemoveCartReq req) {
+    public void consumeRemoveCart(ShoppingCartCommandServicePort.RemoveCartReq req) {
         shoppingCartService.removeCart(req);
     }
 

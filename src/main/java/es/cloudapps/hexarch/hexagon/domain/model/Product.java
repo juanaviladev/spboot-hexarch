@@ -6,19 +6,23 @@ public class Product {
 
     private Integer id;
     private Name name;
+    private Integer cost;
 
-    public Product(Name name) {
-        this.checkInvariants(name);
+    public Product(Name name, Integer cost) {
+        this.cost = cost;
         this.name = name;
+        this.checkInvariants(name);
     }
 
     private void checkInvariants(Name name) {
         if(name == null) throw new IllegalArgumentException("Product name must be not null");
+        if(cost == null) throw new IllegalArgumentException("Product cost must be not null");
     }
 
-    protected Product(Integer id, Name name) {
+    protected Product(Integer id, Name name, Integer cost) {
         this.id = id;
         this.name = name;
+        this.cost = cost;
     }
 
     public Integer id() {
@@ -27,6 +31,10 @@ public class Product {
 
     public String name() {
         return name.value;
+    }
+
+    public Integer cost() {
+        return this.cost;
     }
 
     public static class Name {

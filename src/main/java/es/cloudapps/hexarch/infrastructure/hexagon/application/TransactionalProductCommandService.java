@@ -1,6 +1,6 @@
 package es.cloudapps.hexarch.infrastructure.hexagon.application;
 
-import es.cloudapps.hexarch.hexagon.application.ProductServicePort;
+import es.cloudapps.hexarch.hexagon.application.ProductCommandServicePort;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +9,11 @@ import javax.transaction.Transactional;
 @Primary
 @Service
 @Transactional
-public class TransactionalProductService implements ProductServicePort {
+public class TransactionalProductCommandService implements ProductCommandServicePort {
 
-    private ProductServicePort productServicePort;
+    private final ProductCommandServicePort productServicePort;
 
-    public TransactionalProductService(ProductServicePort productServicePort) {
+    public TransactionalProductCommandService(ProductCommandServicePort productServicePort) {
         this.productServicePort = productServicePort;
     }
 
@@ -27,13 +27,5 @@ public class TransactionalProductService implements ProductServicePort {
         return productServicePort.remove(params);
     }
 
-    @Override
-    public FindResp find(FindReq params) {
-        return productServicePort.find(params);
-    }
 
-    @Override
-    public FindAllResp findAll(FindAllReq params) {
-        return productServicePort.findAll(params);
-    }
 }

@@ -2,12 +2,13 @@ package es.cloudapps.hexarch.hexagon.application;
 
 import es.cloudapps.hexarch.hexagon.domain.exception.NotAvailableProductsException;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface ShoppingCartServicePort {
+public interface ShoppingCartCommandServicePort {
 
     RegisterNewCartResp registerNewCart(RegisterNewCartReq params);
-    class RegisterNewCartReq {
+    class RegisterNewCartReq implements Serializable {
         public List<CartItemDto> items;
 
         public RegisterNewCartReq(List<CartItemDto> items) {
@@ -43,7 +44,7 @@ public interface ShoppingCartServicePort {
     }
 
     CheckoutCartResp checkoutCart(CheckoutCartReq params) throws NotAvailableProductsException;
-    class CheckoutCartReq {
+    class CheckoutCartReq implements Serializable {
         public Integer id;
 
         public CheckoutCartReq(Integer id) {
@@ -66,34 +67,8 @@ public interface ShoppingCartServicePort {
         }
     }
 
-    GetCartResp getCart(GetCartReq params);
-    class GetCartReq {
-        public Integer id;
-
-        public GetCartReq(Integer id) {
-            this.id = id;
-        }
-
-        public GetCartReq() {
-        }
-    }
-    class GetCartResp {
-        public Integer id;
-        public List<CartItemDto> items;
-        public String status;
-
-        public GetCartResp(Integer id, List<CartItemDto> items, String status) {
-            this.id = id;
-            this.items = items;
-            this.status = status;
-        }
-
-        public GetCartResp() {
-        }
-    }
-
     RemoveCartResp removeCart(RemoveCartReq params);
-    class RemoveCartReq {
+    class RemoveCartReq implements Serializable {
         public Integer id;
 
         public RemoveCartReq(Integer id) {
@@ -107,7 +82,7 @@ public interface ShoppingCartServicePort {
     }
 
     AddToCartResp addToCart(AddToCartReq params);
-    class AddToCartReq {
+    class AddToCartReq implements Serializable {
         public Integer cartId;
         public Integer productId;
         public Integer quantity;
@@ -126,7 +101,7 @@ public interface ShoppingCartServicePort {
     }
 
     RemoveFromCartResp removeFromCart(RemoveFromCartReq params);
-    class RemoveFromCartReq {
+    class RemoveFromCartReq implements Serializable {
         public Integer cartId;
         public Integer productId;
 
@@ -139,9 +114,6 @@ public interface ShoppingCartServicePort {
         }
     }
     class RemoveFromCartResp {
-
     }
+
 }
-
-
-

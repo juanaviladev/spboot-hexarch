@@ -2,12 +2,13 @@ package es.cloudapps.hexarch.hexagon.application;
 
 import es.cloudapps.hexarch.hexagon.domain.exception.NotAvailableProductsException;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface ShoppingCartCommandServicePort {
 
     RegisterNewCartResp registerNewCart(RegisterNewCartReq params);
-    class RegisterNewCartReq {
+    class RegisterNewCartReq implements Serializable {
         public List<CartItemDto> items;
 
         public RegisterNewCartReq(List<CartItemDto> items) {
@@ -43,7 +44,7 @@ public interface ShoppingCartCommandServicePort {
     }
 
     CheckoutCartResp checkoutCart(CheckoutCartReq params) throws NotAvailableProductsException;
-    class CheckoutCartReq {
+    class CheckoutCartReq implements Serializable {
         public Integer id;
 
         public CheckoutCartReq(Integer id) {
@@ -67,7 +68,7 @@ public interface ShoppingCartCommandServicePort {
     }
 
     RemoveCartResp removeCart(RemoveCartReq params);
-    class RemoveCartReq {
+    class RemoveCartReq implements Serializable {
         public Integer id;
 
         public RemoveCartReq(Integer id) {
@@ -81,7 +82,7 @@ public interface ShoppingCartCommandServicePort {
     }
 
     AddToCartResp addToCart(AddToCartReq params);
-    class AddToCartReq {
+    class AddToCartReq implements Serializable {
         public Integer cartId;
         public Integer productId;
         public Integer quantity;
@@ -100,7 +101,7 @@ public interface ShoppingCartCommandServicePort {
     }
 
     RemoveFromCartResp removeFromCart(RemoveFromCartReq params);
-    class RemoveFromCartReq {
+    class RemoveFromCartReq implements Serializable {
         public Integer cartId;
         public Integer productId;
 
